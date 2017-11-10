@@ -66,21 +66,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>de.grundid.opendatalab</groupId>-->
-			<!--<artifactId>geojson-jackson</artifactId>-->
-			<!--<version>1.8</version>-->
-		<!--</dependency>-->
-		<dependency>
-			<groupId>org.wololo</groupId>
-			<artifactId>jts2geojson</artifactId>
-			<version>0.10.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-main</artifactId>
-			<version>13-SNAPSHOT</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>
