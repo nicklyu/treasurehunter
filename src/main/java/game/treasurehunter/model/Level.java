@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Level implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "levelid")
     @Getter @Setter private Long id;
 

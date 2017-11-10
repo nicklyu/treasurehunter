@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Account implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountid")
     @Getter @Setter private Long id;
 
