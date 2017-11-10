@@ -17,6 +17,11 @@ public class LevelServiceImpl implements LevelService {
         this.levelRepository = levelRepository;
     }
 
+    @Override
+    public Level findById(Long id) {
+        return levelRepository.findOne(id);
+    }
+
     @Transactional
     @Override
     public List<Level> findAll() {
