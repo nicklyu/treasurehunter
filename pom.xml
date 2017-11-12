@@ -16,6 +16,10 @@
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net repository</name>
             <url>http://download.java.net/maven/2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <layout>default</layout>
         </repository>
         <repository>
             <id>osgeo</id>
@@ -28,7 +32,12 @@
             </snapshots>
             <id>boundless</id>
             <name>Boundless Maven Repository</name>
-            <url>https://boundless.artifactoryonline.com/boundless/main</url>
+            <url>http://repo.boundlessgeo.com/main</url>
+        </repository>
+        <repository>
+            <id>geosolutions</id>
+            <name>GeoSolutions Repository</name>
+            <url>http://maven.geo-solutions.it</url>
         </repository>
         <repository>
 			<id>Hibernate Spatial repo</id>
@@ -48,7 +57,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-        <geotools.version>18.0</geotools.version>
+        <geotools.version>13-SNAPSHOT</geotools.version>
     </properties>
 
 	<dependencies>
