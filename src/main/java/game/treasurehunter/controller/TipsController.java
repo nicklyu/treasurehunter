@@ -53,7 +53,7 @@ public class TipsController {
     @RequestMapping("/{levelId}/{tipId}")
     public String getTipById(@PathVariable Long levelId, @PathVariable Integer tipId) throws IOException {
         LevelData level = levelService.findById(levelId).getLevelData();
-        if (tipId < level.getTipsCount()) {
+        if (tipId < level.getTips().size()) {
             SimpleFeature feature = featureWrapper.getTipFeature(level.getTips().get(tipId), tipId);
             return jsonWrapper.wrapFeature(feature);
         }
