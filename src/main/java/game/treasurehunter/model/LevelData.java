@@ -26,9 +26,6 @@ public class LevelData implements Serializable{
     @Getter @Setter
     private Geometry treasureLocation;
 
-    @Column(name = "tipscount")
-    @Getter @Setter private Integer tipsCount;
-
     @OneToMany(mappedBy = "levelData")
     @Getter @Setter
     List<Tip> tips;
