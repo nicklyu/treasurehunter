@@ -19,13 +19,14 @@ public class Level implements Serializable{
     @Column(name = "levelid")
     @Getter @Setter private Long id;
 
-
+    @OneToMany(mappedBy = "levelData")
+    @Getter @Setter List<Tip> tips;
 
     @Column(name = "levelname")
     @Getter @Setter private String name;
 
-    @Column(name = "leveldiscription")
-    @Getter @Setter private String discription;
+    @Column(name = "leveldescription")
+    @Getter @Setter private String description;
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
@@ -39,7 +40,7 @@ public class Level implements Serializable{
         return "Level{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", discription='" + discription + '\'' +
+                ", description='" + description + '\'' +
 
                 '}';
     }

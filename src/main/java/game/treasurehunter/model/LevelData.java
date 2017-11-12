@@ -28,8 +28,7 @@ public class LevelData implements Serializable{
     @Column(name = "tipscount")
     @Getter @Setter private Integer tipsCount;
 
-    @Column(name = "tipslocation", columnDefinition = "Geometry")
-    @Getter @Setter private Geometry tipsLocation;
+
 
     @Column(name = "area", columnDefinition = "Geometry")
     @Getter @Setter private Geometry area;

@@ -22,4 +22,10 @@ public class LevelServiceImpl implements LevelService {
     public List<Level> findAll() {
         return (List<Level>) levelRepository.findAll();
     }
+
+    @Transactional
+    @Override
+    public Level findById(Long id){
+        return levelRepository.findOne(id);
+    }
 }
