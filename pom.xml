@@ -57,7 +57,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-        <geotools.version>13-SNAPSHOT</geotools.version>
+        <geotools.version>18.0</geotools.version>
     </properties>
 
 	<dependencies>
@@ -92,11 +92,6 @@
 		</dependency>
 
 
-        <dependency>
-            <groupId>org.geotools</groupId>
-            <artifactId>geotools</artifactId>
-            <version>${geotools.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.geotools</groupId>
