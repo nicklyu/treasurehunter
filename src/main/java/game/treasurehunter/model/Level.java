@@ -19,8 +19,6 @@ public class Level implements Serializable{
     @Column(name = "levelid")
     @Getter @Setter private Long id;
 
-    @OneToMany(mappedBy = "levelData")
-    @Getter @Setter List<Tip> tips;
 
     @Column(name = "levelname")
     @Getter @Setter private String name;

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "leveldata")
@@ -28,7 +29,9 @@ public class LevelData implements Serializable{
     @Column(name = "tipscount")
     @Getter @Setter private Integer tipsCount;
 
-
+    @OneToMany(mappedBy = "levelData")
+    @Getter @Setter
+    List<Tip> tips;
 
     @Column(name = "area", columnDefinition = "Geometry")
     @Getter @Setter private Geometry area;
