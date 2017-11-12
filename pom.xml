@@ -34,7 +34,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-	</properties>
+        <geotools.version>18.0</geotools.version>
+    </properties>
 
 	<dependencies>
 		<dependency>
@@ -68,13 +69,49 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-main</artifactId>
-			<version>18.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>geotools</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
 
-	</dependencies>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-main</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geotiff</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-shapefile</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-coverage</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geojson</artifactId>
+            <version>${geotools.version}</version>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>
