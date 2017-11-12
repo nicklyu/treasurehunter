@@ -1,21 +1,17 @@
 package game.treasurehunter.controller;
 
-import game.treasurehunter.model.Level;
 import game.treasurehunter.model.LevelData;
 import game.treasurehunter.service.LevelService;
 import game.treasurehunter.wrapper.FeatureWrapper;
 import game.treasurehunter.wrapper.GeoJsonWrapper;
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

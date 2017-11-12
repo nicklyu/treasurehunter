@@ -1,12 +1,10 @@
 package game.treasurehunter.wrapper;
 
-import com.vividsolutions.jts.geom.Geometry;
 import game.treasurehunter.model.Level;
 import game.treasurehunter.model.Tip;
 import org.geotools.data.DataUtilities;
 import org.geotools.feature.SchemaException;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
-import org.opengis.feature.Feature;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.springframework.stereotype.Component;
