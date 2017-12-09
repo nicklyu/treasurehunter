@@ -77,7 +77,7 @@ public class RestApiRouter {
         dbService.fetchLevelArea(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject area = reply.result();
-                context.response().end(area.toString());
+                context.response().end(GeoUtils.areaToGeoJson(area));
             } else {
                 context.fail(reply.cause());
             }

@@ -30,4 +30,13 @@ public class GeoUtils {
         geoJson = geoJson.replaceAll(" ", "");
         return geoJson;
     }
+
+    public static String areaToGeoJson(JsonObject area){
+        String geoJson = "{\n" +
+                "      \"type\": \"Feature\",";
+        geoJson += " \"geometry\": " + area.getString("area")
+                +", \"properties\": {\n" +
+                "        \"id\": " + area.getInteger("id") + "}}";
+        return geoJson;
+    }
 }
