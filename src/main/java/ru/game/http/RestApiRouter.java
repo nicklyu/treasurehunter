@@ -1,13 +1,24 @@
 package ru.game.http;
 
+import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import ru.game.database.DatabaseService;
 
 public class RestApiRouter {
 
+    private static final String DB_QUEUE = "database.queue";
     private static final String PREFIX = "/api/:levelid/";
 
-    public void init(Router router){
+    private DatabaseService dbService;
+
+
+    public void init(Vertx vertx, Router router){
+
+        dbService = DatabaseService.createProxy(vertx, DB_QUEUE);
+
+        router.get("/api/levels").handler(this::getAllLevels);
         router.get(PREFIX+"info").handler(this::getLevelInfo);
         router.get(PREFIX+"area").handler(this::getLevelArea);
         router.get(PREFIX+"tip").handler(this::getTips);
@@ -17,6 +28,16 @@ public class RestApiRouter {
 
     }
 
+    private void getAllLevels(RoutingContext context){
+        dbService.fetchAllLevels(reply->{
+           if(reply.succeeded()){
+               JsonArray levels = reply.result();
+               context.response().end(levels.toString());
+           } else {
+               context.fail(reply.cause());
+           }
+        });
+    }
     /**
      * Возвращает полную информацию об уровне
      * - Расположение арены
