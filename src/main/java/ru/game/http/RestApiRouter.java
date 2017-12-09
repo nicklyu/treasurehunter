@@ -84,8 +84,15 @@ public class RestApiRouter {
      * @param context
      */
     private void getTips(RoutingContext context){
-        //TODO
-        context.response().end();
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchAllTips(levelId, reply->{
+            if(reply.succeeded()){
+                JsonArray tips = reply.result();
+                context.response().end(tips.toString());
+            } else {
+                context.fail(reply.cause());
+            }
+        });
     }
 
     /**

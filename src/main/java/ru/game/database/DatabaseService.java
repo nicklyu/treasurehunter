@@ -26,6 +26,9 @@ public interface DatabaseService {
     @Fluent
     DatabaseService fetchLevelTreasure(int levelId, Handler<AsyncResult<JsonObject>> resultHandler);
 
+    @Fluent
+    DatabaseService fetchAllTips(int levelId, Handler<AsyncResult<JsonArray>> resultHandler);
+
     static DatabaseService create(JDBCClient jdbcClient, HashMap<SqlQuery, String> sqlQueries, Handler<AsyncResult<DatabaseService>> readyHandler){
         return new DatabaseServiceImpl(jdbcClient,sqlQueries,readyHandler);
     }
