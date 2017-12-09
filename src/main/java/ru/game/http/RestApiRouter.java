@@ -6,6 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import ru.game.database.DatabaseService;
+import ru.game.wrapper.GeoUtils;
 
 public class RestApiRouter {
 
@@ -37,7 +38,7 @@ public class RestApiRouter {
     private void getAllLevels(RoutingContext context) {
         dbService.fetchAllLevels(reply -> {
             if (reply.succeeded()) {
-                JsonArray levels = reply.result();
+                JsonArray levels = GeoUtils.formatLevelsInfo(reply.result());
                 context.response().end(levels.toString());
             } else {
                 context.fail(reply.cause());
@@ -59,7 +60,7 @@ public class RestApiRouter {
         dbService.fetchLevelInfo(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject level = reply.result();
-                context.response().end(level.toString());
+                context.response().end(GeoUtils.levelToGeoJson(level));
             } else {
                 context.fail(reply.cause());
             }
