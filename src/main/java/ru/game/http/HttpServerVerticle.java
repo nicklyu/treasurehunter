@@ -12,12 +12,13 @@ public class HttpServerVerticle extends AbstractVerticle{
 
 
     @Override
-    public void start(Future<Void> startFuture) throws Exception {
+    public void start(Future<Void> startFuture) {
         int port = config().getInteger(HTTP_SERVER_PORT);
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        router.get("/").handler(this::baseHandler);
+        router.get("/").handler(this::exploreHandler);
+        router.get("/admin").handler(this::adminPageHandler);
 
         server
                 .requestHandler(router::accept)
@@ -30,8 +31,15 @@ public class HttpServerVerticle extends AbstractVerticle{
                 });
     }
 
-    private void baseHandler(RoutingContext context){
-        context.response().putHeader("content-type", "application/json")
-                .end("{\"text\" : \"test\"}");
+    private void exploreHandler(RoutingContext context){
+        //TODO [Front] Главная страница
+        //Отображение карты с существующими уровнями
+        context.response().end();
+    }
+
+    private void adminPageHandler(RoutingContext context){
+        //TODO [Front] Админская панель
+        //Список существующих уровней и их редактирование
+        context.response().end();
     }
 }
