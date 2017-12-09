@@ -94,7 +94,7 @@ public class RestApiRouter {
         dbService.fetchAllTips(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonArray tips = reply.result();
-                context.response().end(tips.toString());
+                context.response().end(GeoUtils.tipsToGeoJson(tips));
             } else {
                 context.fail(reply.cause());
             }
@@ -114,7 +114,7 @@ public class RestApiRouter {
                 if (tips.size() < 1) {
                     context.fail(404);
                 } else {
-                    context.response().end(tips.getJsonArray(0).toString());
+                    context.response().end(GeoUtils.tipToGeoJson(tips.getJsonArray(0)));
                 }
             } else {
                 context.fail(reply.cause());
@@ -136,7 +136,7 @@ public class RestApiRouter {
                 if (tips.size() < tipNum) {
                     context.fail(404);
                 } else {
-                    context.response().end(tips.getJsonArray(tipNum).toString());
+                    context.response().end(GeoUtils.tipToGeoJson(tips.getJsonArray(tipNum)));
                 }
             } else {
                 context.fail(reply.cause());
