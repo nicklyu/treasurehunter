@@ -105,6 +105,25 @@ public class DatabaseServiceVertxEBProxy implements DatabaseService {
     return this;
   }
 
+  public DatabaseService fetchLevelArea(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+    if (closed) {
+    resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
+      return this;
+    }
+    JsonObject _json = new JsonObject();
+    _json.put("levelId", levelId);
+    DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
+    _deliveryOptions.addHeader("action", "fetchLevelArea");
+    _vertx.eventBus().<JsonObject>send(_address, _json, _deliveryOptions, res -> {
+      if (res.failed()) {
+        resultHandler.handle(Future.failedFuture(res.cause()));
+      } else {
+        resultHandler.handle(Future.succeededFuture(res.result().body()));
+      }
+    });
+    return this;
+  }
+
 
   private List<Character> convertToListChar(JsonArray arr) {
     List<Character> list = new ArrayList<>();
