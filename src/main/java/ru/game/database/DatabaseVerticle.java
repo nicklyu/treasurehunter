@@ -58,6 +58,7 @@ public class DatabaseVerticle extends AbstractVerticle {
         sqlQueries.put(SqlQuery.LEVEL, properties.getProperty("get-level"));
         sqlQueries.put(SqlQuery.LEVEL_AREA, properties.getProperty("get-level-area"));
         sqlQueries.put(SqlQuery.LEVEL_TREASURE, properties.getProperty("get-level-treasure"));
+        sqlQueries.put(SqlQuery.TIPS, properties.getProperty("get-tips"));
 
         return sqlQueries;
 

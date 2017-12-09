@@ -4,5 +4,6 @@ enum SqlQuery {
     ALL_LEVELS,
     LEVEL,
     LEVEL_AREA,
-    LEVEL_TREASURE
+    LEVEL_TREASURE,
+    TIPS
 }

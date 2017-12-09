@@ -114,4 +114,20 @@ public class DatabaseServiceImpl implements DatabaseService{
         });
         return this;
     }
+
+    @Override
+    public DatabaseService fetchAllTips(int levelId, Handler<AsyncResult<JsonArray>> resultHandler) {
+        dbClient.queryWithParams(sqlQueries.get(SqlQuery.TIPS), new JsonArray().add(levelId), res->{
+            if(res.succeeded()){
+                JsonArray tips = new JsonArray(res.result()
+                        .getResults()
+                        .stream()
+                        .collect(Collectors.toList()));
+                resultHandler.handle(Future.succeededFuture(tips));
+            } else {
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
+        });
+        return this;
+    }
 }

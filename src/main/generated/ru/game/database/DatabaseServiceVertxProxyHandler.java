@@ -136,6 +136,10 @@ public class DatabaseServiceVertxProxyHandler extends ProxyHandler {
           service.fetchLevelTreasure(json.getValue("levelId") == null ? null : (json.getLong("levelId").intValue()), createHandler(msg));
           break;
         }
+        case "fetchAllTips": {
+          service.fetchAllTips(json.getValue("levelId") == null ? null : (json.getLong("levelId").intValue()), createHandler(msg));
+          break;
+        }
 
 
         default: {
