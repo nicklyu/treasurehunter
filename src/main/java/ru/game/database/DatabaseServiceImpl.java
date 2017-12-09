@@ -95,4 +95,23 @@ public class DatabaseServiceImpl implements DatabaseService{
         });
         return this;
     }
+
+    @Override
+    public DatabaseService fetchLevelTreasure(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+        dbClient.queryWithParams(sqlQueries.get(SqlQuery.LEVEL_TREASURE), new JsonArray().add(levelId), res->{
+            if(res.succeeded()){
+                ResultSet resultSet = res.result();
+                JsonArray treasureDtj = resultSet.getResults().get(0);
+
+                JsonObject treasure = new JsonObject();
+                treasure.put("id", treasureDtj.getInteger(0));
+                treasure.put("treasure", treasureDtj.getString(1));
+
+                resultHandler.handle(Future.succeededFuture(treasure));
+            } else {
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
+        });
+        return this;
+    }
 }
