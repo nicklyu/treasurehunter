@@ -111,7 +111,14 @@ public class RestApiRouter {
      * @param context
      */
     private void getTreasure(RoutingContext context){
-        //TODO
-        context.response().end();
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchLevelTreasure(levelId, reply->{
+            if(reply.succeeded()){
+                JsonObject treasure = reply.result();
+                context.response().end(treasure.toString());
+            } else {
+                context.fail(reply.cause());
+            }
+        });
     }
 }
