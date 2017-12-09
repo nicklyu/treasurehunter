@@ -6,6 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import ru.game.database.DatabaseService;
+import ru.game.wrapper.GeoUtils;
 
 public class RestApiRouter {
 
@@ -37,7 +38,7 @@ public class RestApiRouter {
     private void getAllLevels(RoutingContext context) {
         dbService.fetchAllLevels(reply -> {
             if (reply.succeeded()) {
-                JsonArray levels = reply.result();
+                JsonArray levels = GeoUtils.formatLevelsInfo(reply.result());
                 context.response().end(levels.toString());
             } else {
                 context.fail(reply.cause());
@@ -59,7 +60,7 @@ public class RestApiRouter {
         dbService.fetchLevelInfo(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject level = reply.result();
-                context.response().end(level.toString());
+                context.response().end(GeoUtils.levelToGeoJson(level));
             } else {
                 context.fail(reply.cause());
             }
@@ -76,7 +77,7 @@ public class RestApiRouter {
         dbService.fetchLevelArea(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject area = reply.result();
-                context.response().end(area.toString());
+                context.response().end(GeoUtils.areaToGeoJson(area));
             } else {
                 context.fail(reply.cause());
             }
@@ -93,7 +94,7 @@ public class RestApiRouter {
         dbService.fetchAllTips(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonArray tips = reply.result();
-                context.response().end(tips.toString());
+                context.response().end(GeoUtils.tipsToGeoJson(tips));
             } else {
                 context.fail(reply.cause());
             }
@@ -113,7 +114,7 @@ public class RestApiRouter {
                 if (tips.size() < 1) {
                     context.fail(404);
                 } else {
-                    context.response().end(tips.getJsonArray(0).toString());
+                    context.response().end(GeoUtils.tipToGeoJson(tips.getJsonArray(0)));
                 }
             } else {
                 context.fail(reply.cause());
@@ -135,7 +136,7 @@ public class RestApiRouter {
                 if (tips.size() < tipNum) {
                     context.fail(404);
                 } else {
-                    context.response().end(tips.getJsonArray(tipNum).toString());
+                    context.response().end(GeoUtils.tipToGeoJson(tips.getJsonArray(tipNum)));
                 }
             } else {
                 context.fail(reply.cause());
@@ -153,7 +154,7 @@ public class RestApiRouter {
         dbService.fetchLevelTreasure(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject treasure = reply.result();
-                context.response().end(treasure.toString());
+                context.response().end(GeoUtils.treasureToGeoJson(treasure));
             } else {
                 context.fail(reply.cause());
             }
