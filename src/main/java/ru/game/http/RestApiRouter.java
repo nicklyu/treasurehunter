@@ -100,8 +100,19 @@ public class RestApiRouter {
      * @param context
      */
     private void getInitialTip(RoutingContext context){
-        //TODO
-        context.response().end();
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchAllTips(levelId, reply->{
+            if(reply.succeeded()){
+                JsonArray tips = reply.result();
+                if(tips.size()<1){
+                    context.fail(404);
+                } else {
+                    context.response().end(tips.getJsonArray(0).toString());
+                }
+            } else {
+                context.fail(reply.cause());
+            }
+        });
     }
 
     /**
