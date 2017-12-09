@@ -154,7 +154,7 @@ public class RestApiRouter {
         dbService.fetchLevelTreasure(levelId, reply -> {
             if (reply.succeeded()) {
                 JsonObject treasure = reply.result();
-                context.response().end(treasure.toString());
+                context.response().end(GeoUtils.treasureToGeoJson(treasure));
             } else {
                 context.fail(reply.cause());
             }

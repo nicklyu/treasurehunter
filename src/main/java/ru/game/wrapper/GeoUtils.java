@@ -63,4 +63,13 @@ public class GeoUtils {
         geoJson+="]}";
         return geoJson;
     }
+
+    public static String treasureToGeoJson(JsonObject treasure){
+        String geoJson = "{" +
+                "\"type\":\"Feature\",";
+        geoJson += "\"geometry\":" + treasure.getString("treasure")
+                +",\"properties\":{" +
+                "\"id\":" + treasure.getInteger("id") + "}}";
+        return geoJson;
+    }
 }
