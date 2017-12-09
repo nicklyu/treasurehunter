@@ -68,8 +68,15 @@ public class RestApiRouter {
      * @param context
      */
     private void getLevelArea(RoutingContext context){
-        //TODO
-        context.response().end();
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchLevelArea(levelId, reply->{
+           if(reply.succeeded()){
+               JsonObject area = reply.result();
+               context.response().end(area.toString());
+           } else {
+               context.fail(reply.cause());
+           }
+        });
     }
 
     /**

@@ -20,6 +20,9 @@ public interface DatabaseService {
     @Fluent
     DatabaseService fetchLevelInfo(int levelId, Handler<AsyncResult<JsonObject>> resultHandler);
 
+    @Fluent
+    DatabaseService fetchLevelArea(int levelId, Handler<AsyncResult<JsonObject>> resultHandler);
+
     static DatabaseService create(JDBCClient jdbcClient, HashMap<SqlQuery, String> sqlQueries, Handler<AsyncResult<DatabaseService>> readyHandler){
         return new DatabaseServiceImpl(jdbcClient,sqlQueries,readyHandler);
     }
