@@ -35,7 +35,9 @@ import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.core.json.JsonArray;
 import ru.game.database.DatabaseService;
 import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.core.Vertx;
 import ru.game.database.SqlQuery;
+import io.vertx.core.json.JsonObject;
 import java.util.HashMap;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
@@ -75,6 +77,25 @@ public class DatabaseServiceVertxEBProxy implements DatabaseService {
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
     _deliveryOptions.addHeader("action", "fetchAllLevels");
     _vertx.eventBus().<JsonArray>send(_address, _json, _deliveryOptions, res -> {
+      if (res.failed()) {
+        resultHandler.handle(Future.failedFuture(res.cause()));
+      } else {
+        resultHandler.handle(Future.succeededFuture(res.result().body()));
+      }
+    });
+    return this;
+  }
+
+  public DatabaseService fetchLevelInfo(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+    if (closed) {
+    resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
+      return this;
+    }
+    JsonObject _json = new JsonObject();
+    _json.put("levelId", levelId);
+    DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
+    _deliveryOptions.addHeader("action", "fetchLevelInfo");
+    _vertx.eventBus().<JsonObject>send(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
       } else {

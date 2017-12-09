@@ -4,9 +4,11 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.sql.ResultSet;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -35,9 +37,11 @@ public class DatabaseServiceImpl implements DatabaseService{
 
 
     }
+
+
     @Override
     public DatabaseService fetchAllLevels(Handler<AsyncResult<JsonArray>> resultHandler) {
-        dbClient.query(sqlQueries.get(SqlQuery.GET_ALL_LEVELS), res->{
+        dbClient.query(sqlQueries.get(SqlQuery.ALL_LEVELS), res->{
            if(res.succeeded()) {
                JsonArray levels = new JsonArray(res.result()
                .getResults()
@@ -47,6 +51,28 @@ public class DatabaseServiceImpl implements DatabaseService{
            } else {
                resultHandler.handle(Future.failedFuture(res.cause()));
            }
+        });
+        return this;
+    }
+
+    @Override
+    public DatabaseService fetchLevelInfo(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+        dbClient.queryWithParams(sqlQueries.get(SqlQuery.LEVEL),new JsonArray().add(levelId), res->{
+            if(res.succeeded()){
+                ResultSet resultSet = res.result();
+                JsonArray levelDtj = resultSet.getResults().get(0);
+
+                JsonObject level = new JsonObject();
+                level.put("id", levelDtj.getInteger(0));
+                level.put("name", levelDtj.getString(1));
+                level.put("description", levelDtj.getString(2));
+                level.put("area", levelDtj.getString(3));
+                level.put("treasure", levelDtj.getString(4));
+                
+                resultHandler.handle(Future.succeededFuture(level));
+            } else {
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
         });
         return this;
     }

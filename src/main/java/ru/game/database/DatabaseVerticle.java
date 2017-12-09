@@ -54,7 +54,8 @@ public class DatabaseVerticle extends AbstractVerticle {
         HashMap<SqlQuery, String> sqlQueries = new HashMap<>();
         //Заполнение запросами
 
-        sqlQueries.put(SqlQuery.GET_ALL_LEVELS, properties.getProperty("get-all-levels"));
+        sqlQueries.put(SqlQuery.ALL_LEVELS, properties.getProperty("get-all-levels"));
+        sqlQueries.put(SqlQuery.LEVEL, properties.getProperty("get-level"));
 
         return sqlQueries;
 
