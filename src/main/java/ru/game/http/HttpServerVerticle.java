@@ -8,7 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 
 public class HttpServerVerticle extends AbstractVerticle{
 
-    public static final String HTTP_SERVER_PORT = "http.server.port";
+    private static final String HTTP_SERVER_PORT = "http.server.port";
 
 
     @Override
@@ -19,6 +19,9 @@ public class HttpServerVerticle extends AbstractVerticle{
         Router router = Router.router(vertx);
         router.get("/").handler(this::exploreHandler);
         router.get("/admin").handler(this::adminPageHandler);
+
+        RestApiRouter restApiRouter = new RestApiRouter();
+        restApiRouter.init(vertx, router);
 
         server
                 .requestHandler(router::accept)

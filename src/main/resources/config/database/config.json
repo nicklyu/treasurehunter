@@ -1,0 +1,6 @@
+{
+  "database.queries.file.path" : "/config/database/db-queries.properties",
+  "database.jdbc.url" : "jdbc:postgresql://localhost:5432/trgamedb?user=postgres&password=12345",
+  "database.jdbc.driver" : "org.postgresql.Driver",
+  "database.jdbc.maxpoolsize" : 30
+}
