@@ -10,7 +10,7 @@
 
     <properties>
         <vertx.version>3.5.0</vertx.version>
-        <main.verticle>io.vertx.guides.wiki.MainVerticle</main.verticle>
+        <main.verticle>ru.game.app.MainVerticle</main.verticle>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -45,6 +45,11 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-templ-freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-config</artifactId>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rjeschke</groupId>
