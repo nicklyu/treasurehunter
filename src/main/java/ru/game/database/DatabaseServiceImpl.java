@@ -68,8 +68,27 @@ public class DatabaseServiceImpl implements DatabaseService{
                 level.put("description", levelDtj.getString(2));
                 level.put("area", levelDtj.getString(3));
                 level.put("treasure", levelDtj.getString(4));
-                
+
                 resultHandler.handle(Future.succeededFuture(level));
+            } else {
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
+        });
+        return this;
+    }
+
+    @Override
+    public DatabaseService fetchLevelArea(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+        dbClient.queryWithParams(sqlQueries.get(SqlQuery.LEVEL_AREA), new JsonArray().add(levelId), res->{
+            if(res.succeeded()){
+                ResultSet resultSet = res.result();
+                JsonArray levelDtj = resultSet.getResults().get(0);
+
+                JsonObject area = new JsonObject();
+                area.put("id", levelDtj.getInteger(0));
+                area.put("area", levelDtj.getString(1));
+
+                resultHandler.handle(Future.succeededFuture(area));
             } else {
                 resultHandler.handle(Future.failedFuture(res.cause()));
             }
