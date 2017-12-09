@@ -21,7 +21,7 @@ public class HttpServerVerticle extends AbstractVerticle{
         router.get("/admin").handler(this::adminPageHandler);
 
         RestApiRouter restApiRouter = new RestApiRouter();
-        restApiRouter.init(router);
+        restApiRouter.init(vertx, router);
 
         server
                 .requestHandler(router::accept)
