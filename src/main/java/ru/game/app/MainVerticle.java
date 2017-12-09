@@ -5,6 +5,7 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
+import ru.game.http.HttpServerVerticle;
 
 
 public class MainVerticle extends AbstractVerticle {
@@ -17,11 +18,11 @@ public class MainVerticle extends AbstractVerticle {
         vertx.fileSystem().readFile("src/main/resources/config/http/config.json" , bufferAsyncResult -> {
             if(bufferAsyncResult.succeeded()){
                 options.setConfig(new JsonObject(bufferAsyncResult.result().toString()));
-                vertx.deployVerticle("ru.game.http.HttpServerVerticle", options, stringAsyncResult -> {
-                    if(stringAsyncResult.succeeded()){
+                vertx.deployVerticle(HttpServerVerticle.class.getName(), options, serverAsyncResult -> {
+                    if(serverAsyncResult.succeeded()){
                         startFuture.complete();
                     } else {
-                        startFuture.fail(stringAsyncResult.cause());
+                        startFuture.fail(serverAsyncResult.cause());
                     }
                 });
             } else {
