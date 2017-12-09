@@ -67,7 +67,6 @@ public class DatabaseServiceImpl implements DatabaseService{
                 level.put("name", levelDtj.getString(1));
                 level.put("description", levelDtj.getString(2));
                 level.put("area", levelDtj.getString(3));
-                level.put("treasure", levelDtj.getString(4));
 
                 resultHandler.handle(Future.succeededFuture(level));
             } else {

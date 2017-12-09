@@ -16,59 +16,55 @@ public class GeoUtils {
         return result;
     }
 
-    public static String levelToGeoJson(JsonObject level){
-        String geoJson = "{\"type\":\"FeatureCollection\",";
-        geoJson += "\"features\":[" +
-                "{\"type\":\"Feature\",";
+    public static String levelToGeoJson(JsonObject level) {
+
+        String geoJson = "{\"type\":\"Feature\",";
         geoJson += "\"geometry\":" + level.getString("area");
-        geoJson += ",\"properties\":{\"id\":"+level.getInteger("id")
-                +",\"name\":\""+ level.getString("name")
-                +"\",\"description\":\""+ level.getString("description") + "\"}},";
-        geoJson += "{\"type\":\"Feature\"," +
-                "\"geometry\":";
-        geoJson += level.getString("treasure") + ",\"properties\":{}}]}";
+        geoJson += ",\"properties\":{\"id\":" + level.getInteger("id")
+                + ",\"name\":\"" + level.getString("name")
+                + "\",\"description\":\"" + level.getString("description") + "\"}}";
         return geoJson;
     }
 
-    public static String areaToGeoJson(JsonObject area){
+    public static String areaToGeoJson(JsonObject area) {
         String geoJson = "{" +
                 "\"type\":\"Feature\",";
         geoJson += "\"geometry\":" + area.getString("area")
-                +",\"properties\":{" +
+                + ",\"properties\":{" +
                 "\"id\":" + area.getInteger("id") + "}}";
         return geoJson;
     }
 
-    public static String tipToGeoJson(JsonArray tip){
+    public static String tipToGeoJson(JsonArray tip) {
         String geoJson = "{" +
                 "\"type\":\"Feature\",";
         geoJson += "\"geometry\":" + tip.getString(4)
-                +",\"properties\":{" +
-                "\"id\":"+ tip.getInteger(0) +
-                ",\"level_id\":\""+ tip.getInteger(1)+
-                "\",\"name\":\""+tip.getString(2)+
-                "\",\"description\":\""+tip.getString(3)+ "\"}}";
+                + ",\"properties\":{" +
+                "\"id\":" + tip.getInteger(0) +
+                ",\"level_id\":\"" + tip.getInteger(1) +
+                "\",\"name\":\"" + tip.getString(2) +
+                "\",\"description\":\"" + tip.getString(3) + "\"}}";
         return geoJson;
     }
 
-    public static String tipsToGeoJson(JsonArray tips){
+    public static String tipsToGeoJson(JsonArray tips) {
 
         String geoJson = "{\"type\":\"FeatureCollection\",";
         geoJson += "\"features\":[";
 
-        for(int i =0;i<tips.size()-1;i++){
+        for (int i = 0; i < tips.size() - 1; i++) {
             geoJson += tipToGeoJson(tips.getJsonArray(i)) + ",";
         }
-        geoJson += tipToGeoJson(tips.getJsonArray(tips.size()-1));
-        geoJson+="]}";
+        geoJson += tipToGeoJson(tips.getJsonArray(tips.size() - 1));
+        geoJson += "]}";
         return geoJson;
     }
 
-    public static String treasureToGeoJson(JsonObject treasure){
+    public static String treasureToGeoJson(JsonObject treasure) {
         String geoJson = "{" +
                 "\"type\":\"Feature\",";
         geoJson += "\"geometry\":" + treasure.getString("treasure")
-                +",\"properties\":{" +
+                + ",\"properties\":{" +
                 "\"id\":" + treasure.getInteger("id") + "}}";
         return geoJson;
     }
