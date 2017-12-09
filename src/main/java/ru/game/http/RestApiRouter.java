@@ -2,6 +2,7 @@ package ru.game.http;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import ru.game.database.DatabaseService;
@@ -19,15 +20,19 @@ public class RestApiRouter {
         dbService = DatabaseService.createProxy(vertx, DB_QUEUE);
 
         router.get("/api/levels").handler(this::getAllLevels);
-        router.get(PREFIX+"info").handler(this::getLevelInfo);
+        router.get("/api/:levelid/info").handler(this::getLevelInfo);
         router.get(PREFIX+"area").handler(this::getLevelArea);
         router.get(PREFIX+"tip").handler(this::getTips);
-        router.get(PREFIX+"tip/:tipid").handler(this::getTipByNumber);
+        router.get(PREFIX+"tip/:tipId").handler(this::getTipByNumber);
         router.get(PREFIX+"initialtip").handler(this::getInitialTip);
         router.get(PREFIX+"treasure").handler(this::getTreasure);
 
     }
 
+    /**
+     * Возвращает список из всех уровней
+     * @param context
+     */
     private void getAllLevels(RoutingContext context){
         dbService.fetchAllLevels(reply->{
            if(reply.succeeded()){
@@ -40,14 +45,22 @@ public class RestApiRouter {
     }
     /**
      * Возвращает полную информацию об уровне
+     * - Имя и описание
      * - Расположение арены
      * - Расположение подсказок
      * - Расположение сокровища
      * @param context
      */
     private void getLevelInfo(RoutingContext context){
-        //TODO
-        context.response().end();
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchLevelInfo(levelId, reply->{
+            if(reply.succeeded()){
+                JsonObject level = reply.result();
+                context.response().end(level.toString());
+            } else {
+                context.fail(reply.cause());
+            }
+        });
     }
 
     /**

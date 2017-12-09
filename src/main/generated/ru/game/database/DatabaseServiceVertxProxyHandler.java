@@ -42,7 +42,9 @@ import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.core.json.JsonArray;
 import ru.game.database.DatabaseService;
 import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.core.Vertx;
 import ru.game.database.SqlQuery;
+import io.vertx.core.json.JsonObject;
 import java.util.HashMap;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
@@ -122,6 +124,11 @@ public class DatabaseServiceVertxProxyHandler extends ProxyHandler {
           service.fetchAllLevels(createHandler(msg));
           break;
         }
+        case "fetchLevelInfo": {
+          service.fetchLevelInfo(json.getValue("levelId") == null ? null : (json.getLong("levelId").intValue()), createHandler(msg));
+          break;
+        }
+
 
         default: {
           throw new IllegalStateException("Invalid action: " + action);
