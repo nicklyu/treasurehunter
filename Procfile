@@ -1,2 +1,2 @@
-web: java  $JAVA_OPTS -cp target/classes:target/dependency/* ru.game.app.MainVerticle
+web: java -jar target/trgame-1.0-fat.jar
 
