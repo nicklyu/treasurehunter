@@ -5,10 +5,13 @@ import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.StaticHandler;
+import io.vertx.ext.web.templ.FreeMarkerTemplateEngine;
 
 public class HttpServerVerticle extends AbstractVerticle{
 
     private static final String HTTP_SERVER_PORT = "http.server.port";
+    private final FreeMarkerTemplateEngine templateEngine = FreeMarkerTemplateEngine.create();
 
 
     @Override
@@ -17,7 +20,9 @@ public class HttpServerVerticle extends AbstractVerticle{
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        router.get("/").handler(this::exploreHandler);
+        router.get("/app/*").handler(StaticHandler.create().setCachingEnabled(false));
+        router.get("/").handler(context ->context.reroute("/app/main.html"));
+
         router.get("/admin").handler(this::adminPageHandler);
 
         RestApiRouter restApiRouter = new RestApiRouter();
@@ -32,12 +37,6 @@ public class HttpServerVerticle extends AbstractVerticle{
                         startFuture.fail(httpServerAsyncResult.cause());
                     }
                 });
-    }
-
-    private void exploreHandler(RoutingContext context){
-        //TODO [Front] Главная страница
-        //Отображение карты с существующими уровнями
-        context.response().end();
     }
 
     private void adminPageHandler(RoutingContext context){
