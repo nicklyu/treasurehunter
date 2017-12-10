@@ -1,6 +1,6 @@
 {
   "database.queries.file.path" : "/config/database/db-queries.properties",
-  "database.jdbc.url" : "jdbc:postgresql://localhost:5432/trgamedb?user=postgres&password=12345",
+  "database.jdbc.url" : "jdbc:postgresql://ec2-54-247-166-129.eu-west-1.compute.amazonaws.com:5432/d5bjuloeqk7b9d?database=d5bjuloeqk7b9d&user=wwmnyeouztwvqd&password=b1e6bfd40afcfbbecad219f71025bc7ff1ae6284a8192e2bd3708758f0ac8275&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory",
   "database.jdbc.driver" : "org.postgresql.Driver",
   "database.jdbc.maxpoolsize" : 30
 }
