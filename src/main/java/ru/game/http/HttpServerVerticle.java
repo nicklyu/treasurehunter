@@ -16,7 +16,13 @@ public class HttpServerVerticle extends AbstractVerticle{
 
     @Override
     public void start(Future<Void> startFuture) {
-        int port = config().getInteger(HTTP_SERVER_PORT);
+        int port;
+        if(System.getenv("PORT") == null){
+            port = config().getInteger(HTTP_SERVER_PORT);
+        }else {
+            port = Integer.parseInt(System.getenv("PORT"));
+        }
+
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
