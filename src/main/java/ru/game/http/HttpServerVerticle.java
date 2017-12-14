@@ -28,6 +28,7 @@ public class HttpServerVerticle extends AbstractVerticle{
         Router router = Router.router(vertx);
         router.get("/app/*").handler(StaticHandler.create().setCachingEnabled(false));
         router.get("/").handler(context ->context.reroute("/app/main.html"));
+        router.get("/create").handler(context->context.reroute("/app/create.html"));
 
         router.get("/admin").handler(this::adminPageHandler);
 
