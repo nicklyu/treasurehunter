@@ -8,7 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.FreeMarkerTemplateEngine;
 
-public class HttpServerVerticle extends AbstractVerticle{
+public class HttpServerVerticle extends AbstractVerticle {
 
     private static final String HTTP_SERVER_PORT = "http.server.port";
     private final FreeMarkerTemplateEngine templateEngine = FreeMarkerTemplateEngine.create();
@@ -17,9 +17,9 @@ public class HttpServerVerticle extends AbstractVerticle{
     @Override
     public void start(Future<Void> startFuture) {
         int port;
-        if(System.getenv("PORT") == null){
+        if (System.getenv("PORT") == null) {
             port = config().getInteger(HTTP_SERVER_PORT);
-        }else {
+        } else {
             port = Integer.parseInt(System.getenv("PORT"));
         }
 
@@ -27,8 +27,8 @@ public class HttpServerVerticle extends AbstractVerticle{
 
         Router router = Router.router(vertx);
         router.get("/app/*").handler(StaticHandler.create().setCachingEnabled(false));
-        router.get("/").handler(context ->context.reroute("/app/main.html"));
-        router.get("/create").handler(context->context.reroute("/app/create.html"));
+        router.get("/").handler(context -> context.reroute("/app/main.html"));
+        router.get("/create").handler(context -> context.reroute("/app/create.html"));
 
         router.get("/admin").handler(this::adminPageHandler);
 
@@ -38,7 +38,7 @@ public class HttpServerVerticle extends AbstractVerticle{
         server
                 .requestHandler(router::accept)
                 .listen(port, httpServerAsyncResult -> {
-                    if(httpServerAsyncResult.succeeded()){
+                    if (httpServerAsyncResult.succeeded()) {
                         startFuture.complete();
                     } else {
                         startFuture.fail(httpServerAsyncResult.cause());
@@ -46,7 +46,7 @@ public class HttpServerVerticle extends AbstractVerticle{
                 });
     }
 
-    private void adminPageHandler(RoutingContext context){
+    private void adminPageHandler(RoutingContext context) {
         //TODO [Front] Админская панель
         //Список существующих уровней и их редактирование
         context.response().end();
