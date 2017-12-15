@@ -129,4 +129,25 @@ public class DatabaseServiceImpl implements DatabaseService{
         });
         return this;
     }
+
+    @Override
+    public DatabaseService fetchAdminLevel(int levelId, Handler<AsyncResult<JsonObject>> resultHandler) {
+        dbClient.queryWithParams(sqlQueries.get(SqlQuery.ADMIN_LEVEL), new JsonArray().add(levelId), res->{
+            if(res.succeeded()){
+                ResultSet resultSet = res.result();
+                JsonArray levelDtj = resultSet.getResults().get(0);
+
+                JsonObject level = new JsonObject();
+                level.put("id", levelDtj.getInteger(0));
+                level.put("name", levelDtj.getString(1));
+                level.put("description", levelDtj.getString(2));
+                level.put("area", levelDtj.getString(3));
+                level.put("treasure", levelDtj.getString(4));
+                resultHandler.handle(Future.succeededFuture(level));
+            } else {
+                resultHandler.handle(Future.failedFuture(res.cause()));
+            }
+        });
+        return this;
+    }
 }

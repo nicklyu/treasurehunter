@@ -68,4 +68,16 @@ public class GeoUtils {
                 "\"id\":" + treasure.getInteger("id") + "}}";
         return geoJson;
     }
+
+    public static String adminLevelToGeoJson(JsonObject level) {
+        String geoJson = "{\"type\":\"FeatureCollection\",";
+        geoJson += "\"features\":[";
+        geoJson += "{\"type\":\"Feature\","
+                + "\"geometry\":"+ level.getString("area")
+                + ",\"properties\":{}},";
+        geoJson +="{\"type\":\"Feature\","
+                + "\"geometry\":"+ level.getString("treasure")
+                + ",\"properties\":{}}]}";
+        return geoJson;
+    }
 }
