@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+          integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+            integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+            crossorigin=""></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+</head>
+<body style="height: 100%">
+<div id="levellist" class="list-group" style="width: 400px;">
+</div>
+<div id="mapid" style="width: 50%; height: 50%; left:450px;"></div>
+<script>
+    //var host = 'http://localhost:8080';
+    var host = 'https://treasurehunterserver.herokuapp.com';
+
+    var map = L.map('mapid').setView([55.7522200, 37.6155600], 13);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        id: 'mapbox.streets'
+    }).addTo(map);
+
+
+
+
+    var nowlayer = new L.geoJson();
+
+    function loadLevel(url) {
+        $.ajax({
+            dataType: "json",
+            url: url,
+            success: function (data) {
+                map.removeLayer(nowlayer);
+                nowlayer = new L.geoJson(data);
+                var centroid = nowlayer.getBounds().getCenter();
+                map.setView([centroid.lat, centroid.lng], 13);
+                map.addLayer(nowlayer);
+            }
+        });
+    }
+
+
+    function loadLevelsList() {
+        $.getJSON(host + '/api/levels', function (data) {
+            var html = '';
+            data.forEach(function (value) {
+                console.log(value);
+                html += '<a href="#" id=' + value.id + ' onclick="myfunction($(this))" class="list-group-item">' + value.name + '</a>';
+            });
+
+            console.log(html);
+
+            document.getElementById('levellist').innerHTML = html;
+
+        });
+    }
+
+    function myfunction($this) {
+        var id = ($this).attr('id');
+        console.log(id);
+        loadLevel(host + '/api/' + id + '/info');
+    }
+
+    loadLevelsList();
+
+
+</script>
+</body>
+</html>
