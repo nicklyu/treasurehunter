@@ -27,6 +27,7 @@ public class RestApiRouter {
         router.get(PREFIX + "tip/:tipId").handler(this::getTipByNumber);
         router.get(PREFIX + "initialtip").handler(this::getInitialTip);
         router.get(PREFIX + "treasure").handler(this::getTreasure);
+        router.get(PREFIX + "fullinfo").handler(this::getAdminLevel);
 
     }
 
@@ -50,8 +51,6 @@ public class RestApiRouter {
      * Возвращает полную информацию об уровне
      * - Имя и описание
      * - Расположение арены
-     * - Расположение подсказок
-     * - Расположение сокровища
      *
      * @param context
      */
@@ -158,6 +157,18 @@ public class RestApiRouter {
             } else {
                 context.fail(reply.cause());
             }
+        });
+    }
+
+    private void getAdminLevel(RoutingContext context){
+        Integer levelId = Integer.parseInt(context.pathParam("levelid"));
+        dbService.fetchAdminLevel(levelId, reply ->{
+           if(reply.succeeded()){
+               JsonObject level = reply.result();
+               context.response().end(GeoUtils.adminLevelToGeoJson(level));
+           } else {
+               context.fail(reply.cause());
+           }
         });
     }
 }

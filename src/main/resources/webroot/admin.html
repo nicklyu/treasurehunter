@@ -24,7 +24,7 @@
 </div>
 <div id="mapid" style="width: 50%; height: 50%; left:450px;"></div>
 <script>
-    //var host = 'http://localhost:8080';
+    // var host = 'http://localhost:8080';
     var host = 'https://treasurehunterserver.herokuapp.com';
 
     var map = L.map('mapid').setView([55.7522200, 37.6155600], 13);
@@ -59,7 +59,7 @@
             var html = '';
             data.forEach(function (value) {
                 console.log(value);
-                html += '<a href="#" id=' + value.id + ' onclick="myfunction($(this))" class="list-group-item">' + value.name + '</a>';
+                html += '<a href="#" id=' + value.id + ' onclick="loader($(this))" class="list-group-item">' + value.name + '</a>';
             });
 
             console.log(html);
@@ -69,10 +69,10 @@
         });
     }
 
-    function myfunction($this) {
+    function loader($this) {
         var id = ($this).attr('id');
         console.log(id);
-        loadLevel(host + '/api/' + id + '/info');
+        loadLevel(host + '/api/' + id + '/fullinfo');
     }
 
     loadLevelsList();
